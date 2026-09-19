@@ -65,7 +65,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className="app-shell">
       <Header
         onStatus={openStatusModal}
         onHome={goHome}
@@ -75,9 +75,69 @@ function App() {
         <main id="top">
           <Hero />
 
+          {/* Живая бегущая лента */}
+          <section className="moving-ticker" aria-label="СВОИ">
+            <div className="ticker-track">
+              <div className="ticker-content">
+                <span>СВОИ</span>
+                <i>✦</i>
+                <span>НОВЫЕ ВСТРЕЧИ</span>
+                <i>✦</i>
+                <span>НОВЫЕ ЛЮДИ</span>
+                <i>✦</i>
+                <span>ИСТОРИИ</span>
+                <i>✦</i>
+                <span>ПРИГЛАШЕНИЯ</span>
+                <i>✦</i>
+                <span>СВОИ</span>
+                <i>✦</i>
+                <span>НОВЫЕ ВСТРЕЧИ</span>
+                <i>✦</i>
+                <span>НОВЫЕ ЛЮДИ</span>
+                <i>✦</i>
+                <span>ИСТОРИИ</span>
+                <i>✦</i>
+                <span>ПРИГЛАШЕНИЯ</span>
+                <i>✦</i>
+              </div>
+            </div>
+          </section>
+
           <InvitationsSection
             onOpenInvite={openInvite}
           />
+
+          {/* Небольшой «живой» слой между основными секциями */}
+          <section className="live-section">
+            <div className="live-orbit live-orbit-one" />
+            <div className="live-orbit live-orbit-two" />
+
+            <div className="live-inner">
+              <div className="live-label">
+                <span className="live-dot" />
+                Сейчас в СВОИХ
+              </div>
+
+              <div className="live-main">
+                <div>
+                  <strong>4</strong>
+                  <span>человека сейчас смотрят приглашения</span>
+                </div>
+
+                <div>
+                  <strong>6</strong>
+                  <span>новых приглашений доступно</span>
+                </div>
+
+                <div>
+                  <strong>0</strong>
+                  <span>встреч проходят сегодня</span>
+                </div>
+              </div>
+
+              
+            </div>
+          </section>
 
           <HowItWorks />
 
@@ -91,9 +151,32 @@ function App() {
             onOpen={openNews}
           />
 
+          {/* Дополнительная лента перед FAQ */}
+          <section className="quote-strip">
+            <div className="quote-strip-mark">“</div>
+
+            <p>
+            Здесь чужой становится своим.
+            </p>
+
+            <span>СВОИ · реальные встречи</span>
+          </section>
+
           <FAQSection />
 
           <section className="final-cta">
+            <div className="cta-glow" />
+
+            <div className="cta-floating cta-floating-one">
+              <span>✦</span>
+              встречаться
+            </div>
+
+            <div className="cta-floating cta-floating-two">
+              быть своими
+              <span>↗</span>
+            </div>
+
             <p className="section-kicker">
               СВОИ
             </p>
@@ -144,7 +227,7 @@ function App() {
       )}
 
       <footer className="site-footer">
-        <div>
+        <div className="footer-main">
           <span className="footer-logo">
             СВОИ
           </span>
@@ -155,9 +238,21 @@ function App() {
           </p>
         </div>
 
-        <span>
-          Москва · 2026
-        </span>
+        <div className="footer-center">
+          <span className="footer-status">
+            <i />
+            проект работает
+          </span>
+
+          <span>
+            Москва · 2026
+          </span>
+        </div>
+
+        <div className="footer-mark">
+          <span>✦</span>
+          <span>быть ближе</span>
+        </div>
       </footer>
 
       <StatusModal
@@ -165,7 +260,7 @@ function App() {
         invite={modal?.invite}
         onClose={closeModal}
       />
-    </>
+    </div>
   )
 }
 
