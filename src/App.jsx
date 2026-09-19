@@ -1,120 +1,170 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 
+import Header from './components/Header'
+import Hero from './components/Hero'
+import InvitationsSection from './components/InvitationsSection'
+import HowItWorks from './components/HowItWorks'
+import StatsSection from './components/StatsSection'
+import StoriesSection from './components/StoriesSection'
+import NewsSection from './components/NewsSection'
+import FAQSection from './components/FAQSection'
+import StatusModal from './components/StatusModal'
+
+import InvitationsPage from './pages/InvitationsPage'
+import StoriesPage from './pages/StoriesPage'
+import NewsPage from './pages/NewsPage'
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setPage] = useState('home')
+  const [modal, setModal] = useState(null)
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant',
+    })
+  }, [page])
+
+  const goHome = () => {
+    setPage('home')
+  }
+
+  const openInvitations = () => {
+    setPage('invitations')
+  }
+
+  const openStories = () => {
+    setPage('stories')
+  }
+
+  const openNews = () => {
+    setPage('news')
+  }
+
+  const openInvite = (invite) => {
+    if (invite === 'all') {
+      openInvitations()
+      return
+    }
+
+    setModal({
+      type: 'invite',
+      invite,
+    })
+  }
+
+  const openStatusModal = () => {
+    setModal({
+      type: 'status',
+    })
+  }
+
+  const closeModal = () => {
+    setModal(null)
+  }
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+      <Header
+        onStatus={openStatusModal}
+        onHome={goHome}
+      />
+
+      {page === 'home' && (
+        <main id="top">
+          <Hero />
+
+          <InvitationsSection
+            onOpenInvite={openInvite}
+          />
+
+          <HowItWorks />
+
+          <StatsSection />
+
+          <StoriesSection
+            onOpen={openStories}
+          />
+
+          <NewsSection
+            onOpen={openNews}
+          />
+
+          <FAQSection />
+
+          <section className="final-cta">
+            <p className="section-kicker">
+              СВОИ
+            </p>
+
+            <h2>
+              Иногда, чтобы
+              <br />
+              стать своими,
+              <br />
+              достаточно
+              <br />
+              одного приглашения.
+            </h2>
+
+            <p>
+              Проект о том, как цифровое знакомство
+              становится реальной встречей.
+            </p>
+
+            <button
+              type="button"
+              onClick={openStatusModal}
+            >
+              Присоединиться
+              <span>↗</span>
+            </button>
+          </section>
+        </main>
+      )}
+
+      {page === 'invitations' && (
+        <InvitationsPage
+          onBack={goHome}
+          onOpenInvite={openInvite}
+        />
+      )}
+
+      {page === 'stories' && (
+        <StoriesPage
+          onBack={goHome}
+        />
+      )}
+
+      {page === 'news' && (
+        <NewsPage
+          onBack={goHome}
+        />
+      )}
+
+      <footer className="site-footer">
         <div>
-          <h1>Get started</h1>
+          <span className="footer-logo">
+            СВОИ
+          </span>
+
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            Платформа культурного обмена
+            среди студентов.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        <span>
+          Москва · 2026
+        </span>
+      </footer>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      <StatusModal
+        type={modal?.type}
+        invite={modal?.invite}
+        onClose={closeModal}
+      />
     </>
   )
 }
